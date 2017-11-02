@@ -1,0 +1,22 @@
+version: "3.3"
+
+networks:
+  zookeeper:
+  kafka:
+
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    networks:
+      - zookeeper
+
+  kafka:
+    image: wurstmeister/kafka
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: 192.168.10.9
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - zookeeper
+      - kafka
